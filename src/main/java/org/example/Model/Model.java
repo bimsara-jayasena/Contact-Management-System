@@ -1,19 +1,16 @@
 package org.example.Model;
 
 public class Model {
-    private int id;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     private String name;
     private String contactNo;
+    public Model(String name, String contactNo) {
+        this.name = name;
+        this.contactNo = contactNo;
+    }
+    public Model() {
 
+    }
     public  String getName() {
         return name;
     }
@@ -32,11 +29,5 @@ public class Model {
 
 
 
-    public Model(String name, String contactNo) {
-        this.name = name;
-        this.contactNo = contactNo;
-    }
-    public Model() {
 
-    }
 }

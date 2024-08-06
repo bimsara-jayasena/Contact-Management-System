@@ -3,11 +3,10 @@ package org.example.View;
 import org.example.Controller.Controller;
 import org.example.Model.Model;
 
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class View {
-
+    private final Scanner scanner=new Scanner(System.in);
 
     public View(){
         String output="0";
@@ -35,13 +34,13 @@ public class View {
             System.out.println(l);
         }
         System.out.println("What do you Want to Do:");
-        Scanner scanner=new Scanner(System.in);
+
 
         return scanner.nextLine();
     }
 
     public void addUser(){
-        Scanner scanner=new Scanner(System.in);
+
 
         System.out.println("Enter Name:");
         String name=scanner.nextLine();
@@ -58,14 +57,15 @@ public class View {
                 System.out.println("No Entries");
             }else{
                 System.out.println("Total: "+list.size());
-                for (Model m:list){
-                    System.out.println("Name: "+m.getName());
-                    System.out.println("Contact No.: "+m.getContactNo());
-                }
+
+                list.forEach(contact->{
+                    System.out.println("Name: "+contact.getName());
+                    System.out.println("Contact No.: "+contact.getContactNo()+"\n");
+
+                });
             }
     }
     public void search(){
-        Scanner scanner=new Scanner(System.in);
 
         System.out.print("Enter Name you want to find: ");
         String name=scanner.nextLine();
@@ -75,14 +75,13 @@ public class View {
             System.out.println("No Entries");
         }else{
             System.out.println("Contact Found!");
-           for (Model m:list){
-                System.out.println("Name: "+m.getName());
-                System.out.println("Contact No.: "+m.getContactNo());
-            }
+            list.forEach(contact->{
+                    System.out.println("Name: "+contact.getName());
+                    System.out.println("Contact No.: "+contact.getContactNo());
+            });
         }
     }
     public void update(){
-        Scanner scanner=new Scanner(System.in);
 
         System.out.print("Enter Contact Name you want to update: ");
         String contactName=scanner.nextLine();
@@ -99,19 +98,35 @@ public class View {
         }
     }
     public void delete(){
-        Scanner scanner=new Scanner(System.in);
+        ArrayList<String> list=new ArrayList<>();
 
-        System.out.print("Enter Contact Name you want to Delete: ");
-        String contactName=scanner.nextLine();
+        System.out.print("Enter 'm' for multiple deletion,enter 's' for single deletion: ");
+        String selection=scanner.nextLine();
+
+        if(selection.equals("s")){
+            System.out.print("Enter Contact Name you want to Delete: ");
+            list.add(scanner.nextLine());
 
 
-
-        if(Controller.delete(contactName)){
-            System.out.println("Contact Removed!");
+            if(Controller.delete(list)){
+                System.out.println("Contact Removed!");
+            }else{
+                System.out.println("Error");
+            }
         }else{
-            System.out.println("Error");
+            System.out.print("Enter Contact Names you want to Delete: ");//eg:-devid,anna etc
+            String contactName=scanner.nextLine();
+            String[] names=contactName.split(",");
+            list.addAll(Arrays.asList(names));
+
+            if(Controller.delete(list)){
+                System.out.println("Contacts Removed!");
+            }else{
+                System.out.println("Error");
+            }
         }
+
     }
-    public void deleteAll(){}
+
 
 }

@@ -1,35 +1,27 @@
 package org.example.Controller;
 
 import org.example.Model.Model;
-import org.example.View.View;
 import org.example.DAO.Dao;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Controller {
-
-
-
     public static void add(String name,String contactNo){
-
-        Model model=new Model(name,contactNo);
-        Dao.create(model);
+        Dao.create(new Model(name,contactNo));
 
     }
     public static List<Model> view(){
-        List<Model> list=Dao.read();
-        return list;
-
+        return Dao.read();
     }
     public static List<Model> findUserByName(String name){
-        List<Model> models=Dao.findContact(name);
-        return models;
+        return Dao.findContact(name);
     }
     public static boolean update(String contactName,String newName,String newContactNo){
         return Dao.update(contactName,newName,newContactNo);
     }
-    public static boolean delete(String fullName){
-        return Dao.delete(fullName);
+    public static boolean delete(ArrayList<String> list){
+        return Dao.delete(list);
     }
 }
